@@ -1,0 +1,15 @@
+.wrapper {
+    padding: 20px;
+}
+
+.top-bar {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar__title {
+    margin: 0;
+    font-size: 28px;
+}
