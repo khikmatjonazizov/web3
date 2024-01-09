@@ -17,12 +17,12 @@ export const MetamaskListeners = () => {
     } = useAppSelector(state => state.metamask);
 
     useEffect(() => {
-        if (window.ethereum && isConnected) {
+        if ((window as any).ethereum && isConnected) {
             const address = accounts[currentAccountIndex].address;
-            window.ethereum.on('chainChanged', async (chainId: bigint) => {
+            (window as any).ethereum.on('chainChanged', async (chainId: bigint) => {
                 const networkId = parseInt(String(chainId), 16);
 
-                const web3 = new Web3(window.ethereum);
+                const web3 = new Web3(window as any);
                 const balanceWei = await web3.eth.getBalance(address);
                 const balance = web3.utils.fromWei(balanceWei, 'ether');
 
@@ -32,14 +32,14 @@ export const MetamaskListeners = () => {
                 }));
             });
 
-            window.ethereum.on('accountsChanged', async (addresses: string[]) => {
+            (window as any).ethereum.on('accountsChanged', async (addresses: string[]) => {
                 const address = addresses[0];
 
                 for (let index = 0; index < accounts.length; index++) {
                     if (accounts[index].address !== address) continue;
 
                     dispatch(UPDATE_CURRENT_ACCOUNT_INDEX(index));
-                    const web3 = new Web3(window.ethereum);
+                    const web3 = new Web3(window as any);
                     const networkIdBigInt = await web3.eth.net.getId();
                     const networkId = parseInt(String(networkIdBigInt), 16);
                     if (accounts[index].networkId !== networkId) {

@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import Web3, { validator } from 'web3';
+import Web3 from 'web3';
 
 import { useAppDispatch, useAppSelector } from '@/shared/model/hooks';
 import { SET_ACCOUNTS_AND_STOP_LOADING, SET_LOADING } from '@/entities/metamask/model/slice.ts';
@@ -14,8 +14,8 @@ export const useConnectToMetamask = () => {
     const getCurrentProvider = () => {
         let provider: any = null;
 
-        if (window.ethereum) {
-            provider = window.ethereum;
+        if ((window as any).ethereum) {
+            provider = (window as any).ethereum;
         } else {
             console.log('Metamask did not detect');
         }
